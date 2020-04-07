@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+        var myAssign = function(target){
+            var arrObj = Array.prototype.slice.call(arguments,1);
+            console.log(arrObj);
+            for(var i=0;i<arrObj.length;i++){
+                for(var key in arrObj[i]){
+                    console.log(key,arrObj[i])
+                    // if(target.hasOwnProperty(arrObj[key]))
+                    target[key] = arrObj[i][key];
+                }
+            }
+            console.log(target);
+            return target;
+        }
+        var a1 = {b:2,c:3}
+        var a2 = {c:2,d:4}
+        myAssign({},a1,a2)
+    </script>
+</body>
+</html>

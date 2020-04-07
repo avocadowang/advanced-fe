@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //1.基本结构
+        //2.处理异步
+        //3.链式调用
+        //4.all race等完善
+        class Promise {
+            constructor(executor) {
+                this.state = 'pending';
+                this.reason = undefined;
+                this.value = undefined;
+                this.onFulfilledCbs = [];
+                this.onRejectCbs = [];
+                let resolve = (value) => {
+                    if (this.state = 'pending') {
+                        this.state = 'fulfilled';
+                        this.value = value;
+                        this.onFulfilledCbs.forEach(fn => fn());
+                    }
+                }
+                let reject = value => {
+                    if (this.state = 'pending') {
+                        this.state = 'rejected';
+                        this.reason = value;
+                        this.onRejectCbs.forEach(fn => fn());
+                    }
+                }
+                try {
+                    executor(resolve, reject);
+                } catch (error) {
+                    reject(error);
+                }
+            }
+
+            then(onFulfilled, onRejected) {
+                let promise2 = new Promise((resolve, reject) => {
+                    if (this.state = 'fulfilled') {
+                        let x = onFulfilled(this.value);
+                        resolvePromise(promise2, x, resolve, reject);
+                    }
+                    if (this.state = 'rejected') {
+                        let x = onRejected(this.reason);
+                        resolvePromise(promise2, x, resolve, reject);
+                    }
+                    if (this.state = 'pending') {
+                        this.onFulfilledCbs.push(() => { let x = onFulfilled(this.value); });
+                        this.onRejectCbs.push(() => { let x = onRejected(this.reason); });
+                    }
+                })
+                return promise2;
+            }
+        }
+    </script>
+</body>
+
+</html>

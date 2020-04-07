@@ -1,0 +1,37 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var s = 'qwerezxv'
+        var lengthOfLongestSubstring = function (s) {
+            const arr = s.split('')
+            let b = []
+            let max = 0
+            for (let i = 0; i < arr.length; i++) {
+                if (b.indexOf(arr[i]) > -1) {
+                    if (b.length > max) {
+                        max = b.length
+                    }
+                    b = b.slice(b.indexOf(arr[i]) + 1, b.length)
+                }
+                b.push(arr[i])
+            }
+            if (b.length > max) {
+                max = b.length
+            }
+            console.log(max);
+            return max
+        };
+        lengthOfLongestSubstring(s);
+        
+    </script>
+</body>
+
+</html>

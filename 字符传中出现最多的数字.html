@@ -1,0 +1,38 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //.求字符传中出现最多元素及次数
+        var str = 'dgfdgff'
+        function find(str) {
+            var obj = {};
+            for (var i = 0; i < str.length; i++) {
+                var key = str.charAt(i);
+                console.log(key);
+                if(obj.hasOwnProperty(key)){
+                    obj[key]++;
+                }else{
+                    obj[key]=1;
+                }
+            }
+            var char,times=0;
+            for(var key in obj){
+               if(obj[key]>times){
+                   times=obj[key];
+               }
+               char=key;
+            }
+            console.log(`${key}这个字符出现了${times}次`)
+        }
+        find(str)
+    </script>
+</body>
+
+</html>

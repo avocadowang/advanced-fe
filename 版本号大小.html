@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var v1 = '1.2.21';
+        var v2 = '1.1.20';
+        function compareVison(v1,v2){
+            var v1Arr = v1.split('.'),v2Arr = v2.split('.');
+            for(var i = 0,len = v1Arr.length;i<len;i++){
+                if(v1Arr[i]===v2Arr[i]){
+                    continue;
+                }
+                // console.log(v1Arr[i],v2Arr[i])
+                // if(v1Arr[i]>v2Arr[i]&){
+                //     return true
+                // }else{
+
+                // }
+                // console.log(v1Arr[i]>v2Arr[i]?true:false)
+                return v1Arr[i]>v2Arr[i]?true:false;
+            }
+
+        }
+        console.log(compareVison(v1,v2));
+    </script>
+</body>
+</html>

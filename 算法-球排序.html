@@ -1,0 +1,62 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 在一个字符串数组中有红、黄、蓝三种颜色的球，且个数不相等、顺序不一致，请为该数组排序。使得排序后数组中球的顺序为:黄、红、蓝。
+        //例如：红蓝蓝黄红黄蓝红红黄红，排序后为：黄黄黄红红红红红蓝蓝蓝。
+
+        //方法一:遍历取每个球的个数,用对象value保存,输出新遍历字符串
+        var str = '红蓝蓝黄红黄蓝红红黄红'
+        function sortBalls(str){
+            var obj = {'黄':0,'红':0,'蓝':0},res='';
+            for(let i=0,length = str.length;i<length;i++){
+                obj[str.charAt(i)]++
+            }
+            for(let key in obj){
+                var str="";
+                for(var j=0;j<obj[key];j++){
+                    res+=key
+                }
+            }
+            return res
+        }
+        sortBalls(str)
+
+        //方法2:涉及排序就可联想到sort,但sort使用整数,如果为字符会转为unicode编码,可用颜色为key,代号为value,value为数字
+
+        function sortBalls(str){
+            var obj={'黄':0,'红':1,'蓝':2};
+            return str.split('').sort((a,b)=>{return obj[a]-obj[b]}).join('');
+        }
+        
+        //方法3:创建对应种类个数数组,分别push.合并
+        function sortBalls(str){
+            // or Array.from({length:3}.fill([]),[[],[],[]];
+            var arr = Array.from({length:3},item=>item=[]);
+            //创建hash表,按排序顺序设置value
+            var hashObj = {'黄':0,'红':1,'蓝':2};
+            //遍历字符将元素放入对应下标子数组
+            for(var i=0,length=str.length;i<length;i++){
+                var item=str.charAt(i);
+                arr[hashObj[item]].push(item);
+            }
+            return arr.reduce((pre,cur)=>pre+=cur.join(''),'')
+        }
+
+        //方法四:用str的matchAll,matchAll为ES新增加API,返回不可重启的迭代器RegExpStringIterator {},需用...orArray.from转为数组可观察
+        function sortBall(str){
+            return ['黄','红','蓝'].map((o)=>o.repeat([...'红蓝蓝黄红黄蓝红红黄红'.matchAll(o)].length)).join('')
+        }
+
+        // 引申:可联想到常用快排或者归并排序方式实现
+    </script>
+</body>
+
+</html>

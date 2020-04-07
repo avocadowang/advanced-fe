@@ -1,0 +1,34 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        nums = [1,2,3,4]
+        // 除自身以外数组的乘积
+        var productExceptSelf = function (nums) {
+            return nums.reduce((pre, cur, index) => {
+                var temArr = nums.filter((_item, _index) => {
+                    return nums.indexOf(_item)===_index;
+                })
+
+                var temVal = temArr.reduce((_pre, _cur) => {
+                    return _pre * _cur
+                })
+                 pre[index] = temVal;
+                 return pre;
+                console.log(pre, index);
+
+            }, [])
+
+        };
+        console.log(productExceptSelf(nums));
+    </script>
+</body>
+
+</html>

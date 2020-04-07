@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //一
+        // 1.在app.vue的created里读取sessionStorage中的数据存在store中,用vuex的replaceState方法替换store 的状态;
+        // 2.在boforeuoload中将store的数据存在sessionStorage中
+        if(sessionStorage.getItem('store')){
+            this.$store.replaceState(Object.assign({},this.$store.state,JSON.parse(sessionStorage.getItem('store'))))
+        }
+
+        window.addEventListener("beforeunload",()=>{
+            sessionStorage.setItem('store',JSON.stringify(this.$store.state));
+        })
+
+        //二.
+        //使用插件如vuex-persistedstate
+        
+    </script>
+</body>
+</html>

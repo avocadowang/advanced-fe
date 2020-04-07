@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>ppp</div>
+    <script>
+        // 关键点: observe,dep,watcher,object.defineProperty
+        function observe(obj){
+            if(!typeof obj || typeof obj!=='object') return;
+            Object.keys(data).forEach(key=>{
+                defineReactive(data,key,data[key]);
+            })
+        }
+
+        class Dep{
+            constructor(){
+                this.subs = []
+            }
+            addSub(sub){
+                this.subs.push(sub)
+            }
+            notify(){
+                this.subs.forEach(sub=>{
+                    sub.update()
+                })
+            }
+        }
+
+        Dep.target = null;
+
+        class Watcher{
+            constructor(obj,key,cb){
+                Dep.target = this;
+                this.obj = obj;
+                this.key = key;
+                this.val = obj[key];
+                this.cb = cb;
+                Dep.target = null;
+            }
+            update(){
+                this.cb(this.obj[this.key])
+            }
+        }
+
+        function defineReactive(obj,key,val){
+            var dep = new Dep();
+            observe(val);
+            Object.defineProperty(obj,key,{
+                get:function(){
+                    console.log('getval');
+                    if(Dep.target){
+                        dep.addSub(Dep.target)
+                    }
+                    return val;
+                },
+                set:function(newVal){
+                    console.log('changeVal');
+                    val = newVal;
+                    dep.notify(newVal);
+                    console.log(val);
+
+                },
+                enumerable: true,
+                configurable: true,
+            })
+        }
+
+        function update(val){
+            document.querySelector('div').innerHTML =val;
+        }
+
+        var data = {name: '000'}
+        observe(data);
+        var sub = new Watcher(data,'name',update);
+        data.name = '建国';
+
+    </script>
+</body>
+</html>

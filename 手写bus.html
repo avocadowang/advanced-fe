@@ -1,0 +1,44 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class EventEmeitter {
+            constructor(maxListeners) {
+                const defaultmaxListeners = 10;
+                this._events = new Map();
+                this._maxListeners = (maxListeners && maxListeners > 0) ? maxListeners : defaultmaxListeners;
+            }
+            on(type, fn) {
+                let typeObj = this._events.get(type);
+                if (typeObj) {
+                    if (typeObj.length >= this._maxListeners) return;
+                    this._events.get(type).push(fn);
+                } else {
+                    this._events.set(type, [fn]);
+                }
+            }
+            emit(type, ...args) {
+                if (this._events.get(type)) {
+                    this._events.get(type).forEach(fn => {
+                        fn.call(this, args)
+                    })
+                }
+            }
+            remove(type, fn) {
+                let typeObj = this._events.get(type);
+                if (typeObj && typeObj.find(e => e === fn)) {
+                    typeObj.splice(typeObj.findIndex(e => e === fn), 1);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

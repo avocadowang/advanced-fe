@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        var a = [1, 3,5,8,334];
+        var b = [2, 4];
+        // function myConcat(a,b){
+        //     return [...a,...b].sort((a,b)=>{return a-b});
+        // }
+        // console.log(myConcat(a,b));
+
+        const merge = (nums1, m, nums2, n) => {
+            let i = 0
+            let len = m
+            for (let j = 0; j < n; j++) {
+                while (nums1[i] < nums2[j] && i < len) {
+                    i++
+                }
+                nums1.splice(i, 0, nums2[j])
+                len++
+            }
+            // nums1.length = m + n
+            // console.log(nums1)
+            return nums1;
+        }
+        console.log(merge(a, 5, b, 2))
+
+
+        // // function myMerge(a,b){
+        // //    for (var j=0;j<b.length;b++){
+        // //        for(var i=0;i<a.length;i++){
+        // //            if(i>a.length){return}
+        // //            if(b[j]<a[i]){
+        // //                a.splice(i,0,b[j]);
+        // //            }else{
+        // //                continue;
+        // //            }
+        // //        }
+        // //    }
+        // //    console.log(a);
+        // //    return a;
+        // // }
+        // // myMerge(a,b);
+        // console.log(myMerge(a,b));
+    </script>
+</body>
+
+</html>

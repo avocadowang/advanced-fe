@@ -1,0 +1,53 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //         编程题，找出字符串中连续出现最多的字符和个数（蘑菇街）
+        //         'abcaakjbb' => {'a':2,'b':2}
+        //         'abbkejsbcccwqaa' => {'c':3}
+        function findStr(str) {
+            var obj = {};
+            var temp = '';
+            var cur = '';
+            var maxNum = 0,
+                maxVal = '',
+                res = {};
+            for (var i = 0, len = str.length; i < len; i++) {
+                cur = str.charAt(i);
+                if (cur in obj) {
+                    temp = cur;
+                    if (str.charAt(i + 1) === temp) {
+                        obj[cur]++;
+                        i++;
+                    }
+                } else {
+                    obj[cur] = 1;
+                }
+            }
+            for (var key in obj) {
+                if (maxNum < obj[key]) {
+                    maxNum = obj[key]
+                }
+            }
+
+            for (var key in obj) {
+                if (maxNum === obj[key]) {
+                    maxVal = key;
+                    res[key] = maxNum;
+                }
+            }
+            console.log(res);
+            return res;
+        }
+        findStr('abbkejsbcccwqaa')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var publisher = {
+            subscribers: {
+                any: []//事件类型:订阅者
+            },
+            //将订阅者添加到订阅者数组
+            subscribe: function (fn, type) {
+                type = type || 'any';
+                if (typeof this.subscribe[type] === "undefined") {
+                    this.subscribers[type] = [];
+                }
+                this.subscribers[type].push(fn);
+                console.log(this.subscribers[type])
+            },
+            //移除订阅者
+            unsubscribe: function (fn, type) {
+                this.visitSubscribers('unsubscribe', fn, type);
+            },
+            publish: function (publication, type) {
+                this.visitSubscribers('publish', publication, type);
+            },
+            visitSubscribers: function (action, arg, type) {
+                var pubtype = type || 'any',
+                    subscribers = this.subscribers[pubtype],
+                    i,
+                    max = subscribers.length;
+                for (i = 0; i < max; i++) {
+                    if (action = 'publish') {
+                        subscribers[i](arg);
+                        console.log('arg is ,' + arg)
+                    } else {
+                        if (subscribers[i] === arg) {
+                            subscribers.splice(i, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        //makePublisher接受一个对象作为参数,通过吧上述通用发布者复制到该对象中,将其转化为一个发布者
+        function makePublisher(o) {
+            var i;
+            for (i in publisher) {
+                if (publisher.hasOwnProperty(i) && typeof publisher[i] === "function") {
+                    o[i] = publisher[i];
+                }
+            }
+            o.subscribers = { any: {} };
+        }
+        //paper对象用于发布日报和月刊
+        var paper = {
+            daily: function () {
+                this.publish('big news today');
+            },
+            monthly: function () {
+                this.publish('interesting analysis', 'monthly');
+            }
+        }
+        //将paper构成一个发行者
+        makePublisher(paper);
+        //订阅者对象joe方法
+        var joe = {
+            drinkCoffee: function (paper) {
+                console.log('just read' + paper);
+            },
+            sundayPreNap: function (monthly) {
+                console.log('About to fall asleep reading this' + monthly);
+            }
+        }
+
+        //paper注册joe
+        paper.subscribe(joe.drinkCoffee);
+        // paper.subscribe(joe.sundayPreNap, 'monthly');
+
+        paper.daily();
+        // paper.daily();
+        // paper.daily();
+        // paper.monthly();
+
+
+        // makePublisher(joe);
+
+        // joe.tweet = function (msg) {
+        //     this.publish(msg);
+        // };
+
+        // paper.readTweets = function (tweet) {
+        //     alert('Call big meeting! Someone ' + tweet);
+        // };
+
+        // joe.subscribe(paper.readTweets);
+
+        // joe.tweet("hated the paper today");
+    </script>
+</body>
+
+</html>

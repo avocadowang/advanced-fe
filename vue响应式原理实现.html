@@ -1,0 +1,95 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>ddd</div>
+    <script>
+        // 关键字: defineReactive,observer,watcher,Object.defineProperty,dep,sub
+        function observe(obj) {
+            //判断类型 
+            if (!obj || typeof obj !== 'object') return;
+            Object.keys(data).forEach(key => {
+                defineReactive(data, key, data[key])
+            })
+        }
+        // .设置发布者函数
+        class Dep {
+            constructor() {
+                this.subs = [];
+            }
+            addSub(sub) {
+                this.subs.push(sub)
+            }
+            notify() {
+                this.subs.forEach(sub => {
+                    sub.update()
+                })
+            }
+        }
+
+        // .设置订阅者
+        class Watcher {
+            constructor(obj, key, cb) {
+                Dep.target = this;
+                this.obj = obj;
+                this.key = key;
+                this.value = obj[key];
+                this.cb = cb;
+                Dep.target = null
+            }
+            update() {
+                this.cb(this.obj[this.key]);
+            }
+        }
+
+        //全局属性,通过该属性配置watcher
+        Dep.target = null;
+        // .设置更新方法
+        function update(value) {
+            document.querySelector('div').innerHTML = value;
+        }
+
+        //接下来,对 defineReactive 函数进行改造
+        function defineReactive(obj, key, val) {
+            // 递归子属性 
+            observe(val)
+            let dep = new Dep()
+            Object.defineProperty(obj, key, {
+                enumerable: true,
+                configurable: true,
+                get: function() {
+                    console.log('get value')
+                    // 将 Watcher 添加到订阅 
+                    if (Dep.target) {
+                        dep.addSub(Dep.target)
+                    }
+                    return val
+                },
+                set: function(newVal) {
+                    console.log('change value')
+                    val = newVal
+                    // 执行 watcher 的 update 方法 
+                    dep.notify()
+                }
+            })
+        }
+
+
+        var data = { name: 'yck' }
+        observe(data);
+        // 模拟解析到 `{{name}}` 触发的操作 
+        var sub = new Watcher(data, 'name', update);
+        // update Dom innerText 
+        data.name = 'yyy';
+
+
+    </script>
+</body>
+
+</html>

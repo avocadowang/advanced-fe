@@ -1,0 +1,29 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function curry(fn) {
+            let slice = Array.prototype.slice, // 将slice缓存起来
+                args = slice.call(arguments, 1); // 这里将arguments转成数组并保存
+                console.log(Array.from(arguments),1,args);
+            return function () {
+                // 将新旧的参数拼接起来
+                let newArgs = args.concat(slice.call(arguments));
+                console.log(newArgs,2);
+                return fn.apply(null, newArgs); // 返回执行的fn并传递最新的参数
+                console.log(newArgs,3);
+            }
+        }
+        var add = function(a,b,c,d){console.log(a+b+c+d)}
+        curry(add(3,4,5,6));
+    </script>
+</body>
+
+</html>

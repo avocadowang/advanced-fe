@@ -1,0 +1,64 @@
+<!-- <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var entry = {
+            'a.b.c.dd': 'abcdd',
+            'a.d.xx': 'adxx',
+            'a.e': 'ae'
+        }
+
+        // 要求转换成如下对象
+        // var output = {
+        //   a: {
+        //     b: {
+        //       c: {
+        //         dd: 'abcdd'
+        //       }
+        //     },
+        //     d: {
+        //       xx: 'adxx'
+        //     },
+        //     e: 'ae'
+        //   }
+        // }
+
+
+
+
+        //有点问题
+        function transObj(entry) {
+            var output = {};
+            var temp = Object.create(null);
+
+            for (let key in entry) {
+                var keyArr = key.split('.');
+                if(!temp[keyArr[i]])
+                for (var i = 1, pointLen = keyArr.length; i < pointLen; i++) {
+                    // temp = output.keyArr[0];
+                    if(!temp[keyArr[i]]){
+                        console.log(i,temp,keyArr[i],keyArr.length)
+
+                        temp[keyArr[i]] = keyArr.length-1===i?entry[key]:Object.create(null)
+                        
+                        temp = temp[keyArr[i]]
+                    }
+                                        // temp = 
+                }
+            }
+            console.log(temp)
+            return temp;
+
+        }
+        transObj(entry)
+    </script>
+</body>
+
+</html> -->

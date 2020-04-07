@@ -1,0 +1,43 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #left,
+        #right {
+            position: absolute;
+            width: 300px;
+            top: 0;
+            background-color: #0FC;
+        }
+
+        #left {
+            left: 0;
+        }
+
+        #right {
+            right: 0;
+        }
+
+        #main {
+            margin: 0 300px;
+            background-color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="left">左边定宽</div>
+    <div id="main">中间自适应</div>
+    <div id="right">右边定宽</div>
+</body>
+
+</html>
